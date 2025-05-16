@@ -16,13 +16,24 @@ class Scraper:
         BSobj = BeautifulSoup(haha,parsername) #BSオブジェクトを作成
 
         for eachtag in BSobj.find_all("a"): #BSオブジェクトのfindallメソッド、オブジェクトのリストを返す　eachtagには各オブジェクトが代入される
-            urlstr = eachtag.get("href")
+            eachtag2 = eachtag.find_all("h3")
+            keyword = "大谷"
+            for tag in eachtag2:
+                keycheck =tag.get_text() 
+                if keyword in keycheck:
 
-            if "article" in urlstr:
-                full_url = urljoin(self.site,urlstr)
-                print(full_url)
-            if "article" not in urlstr:
-                continue
+                    urlstr = eachtag.get("href")
+                    if urlstr is None:
+                        continue
+                    if urlstr is not None:
+                        if "article" in urlstr:
+                            full_url = urljoin(self.site,urlstr)
+                            print(full_url)
+                        if "article" not in urlstr:
+                            continue
+                if keyword is not None:
+                    continue
+
 
 site = "https://newsdig.tbs.co.jp/list/tag/%E5%A4%A7%E8%B0%B7%E7%BF%94%E5%B9%B3"
 Scraper(site).scrape()
