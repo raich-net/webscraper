@@ -7,7 +7,9 @@ class Scraper:
         self.site=site
    #self.siteインスタンス変数にscraper()引数を代入
    
-    def scrape(self):
+    def scrape(self,word):
+        self.keyword = word
+
         r =urllib.request.urlopen(self.site) #urlopen関数、返り値はオブジェクト
         haha = r.read() #readメソッド
    #urllib.requestモジュールを使うのはここまで
@@ -17,7 +19,7 @@ class Scraper:
 
         for eachtag in BSobj.find_all("a"): #BSオブジェクトのfindallメソッド、オブジェクトのリストを返す　eachtagには各オブジェクトが代入される
             eachtag2 = eachtag.find_all("h3")
-            keyword = "大谷"
+            keyword = self.keyword
             for tag in eachtag2:
                 keycheck =tag.get_text() 
                 if keyword in keycheck:
@@ -36,7 +38,8 @@ class Scraper:
 
 
 site = "https://newsdig.tbs.co.jp/list/tag/%E5%A4%A7%E8%B0%B7%E7%BF%94%E5%B9%B3"
-Scraper(site).scrape()
+word = "山本"
+Scraper(site).scrape(word)
 
         
 
